@@ -1,93 +1,38 @@
-<script setup lang="ts">
-import { ref } from 'vue'
-import viteLogo from '../assets/vite.svg'
-import heroImg from '../assets/hero.png'
-import vueLogo from '../assets/vue.svg'
-
-const count = ref(0)
-</script>
-
 <template>
-  <section id="center">
-    <div class="hero">
-      <img :src="heroImg" class="base" width="170" height="179" alt="" />
-      <img :src="vueLogo" class="framework" alt="Vue logo" />
-      <img :src="viteLogo" class="vite" alt="Vite logo" />
-    </div>
-    <div>
-      <h1>Get started</h1>
-      <p>Edit <code>src/App.vue</code> and save to test <code>HMR</code></p>
-    </div>
-    <button class="counter" @click="count++">Count is {{ count }}</button>
-  </section>
-
-  <div class="ticks"></div>
-
-  <section id="next-steps">
-    <div id="docs">
-      <svg class="icon" role="presentation" aria-hidden="true">
-        <use href="/icons.svg#documentation-icon"></use>
-      </svg>
-      <h2>Documentation</h2>
-      <p>Your questions, answered</p>
-      <ul>
-        <li>
-          <a href="https://vite.dev/" target="_blank">
-            <img class="logo" :src="viteLogo" alt="" />
-            Explore Vite
-          </a>
-        </li>
-        <li>
-          <a href="https://vuejs.org/" target="_blank">
-            <img class="button-icon" :src="vueLogo" alt="" />
-            Learn more
-          </a>
-        </li>
-      </ul>
-    </div>
-    <div id="social">
-      <svg class="icon" role="presentation" aria-hidden="true">
-        <use href="/icons.svg#social-icon"></use>
-      </svg>
-      <h2>Connect with us</h2>
-      <p>Join the Vite community</p>
-      <ul>
-        <li>
-          <a href="https://github.com/vitejs/vite" target="_blank">
-            <svg class="button-icon" role="presentation" aria-hidden="true">
-              <use href="/icons.svg#github-icon"></use>
-            </svg>
-            GitHub
-          </a>
-        </li>
-        <li>
-          <a href="https://chat.vite.dev/" target="_blank">
-            <svg class="button-icon" role="presentation" aria-hidden="true">
-              <use href="/icons.svg#discord-icon"></use>
-            </svg>
-            Discord
-          </a>
-        </li>
-        <li>
-          <a href="https://x.com/vite_js" target="_blank">
-            <svg class="button-icon" role="presentation" aria-hidden="true">
-              <use href="/icons.svg#x-icon"></use>
-            </svg>
-            X.com
-          </a>
-        </li>
-        <li>
-          <a href="https://bsky.app/profile/vite.dev" target="_blank">
-            <svg class="button-icon" role="presentation" aria-hidden="true">
-              <use href="/icons.svg#bluesky-icon"></use>
-            </svg>
-            Bluesky
-          </a>
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  <div class="ticks"></div>
-  <section id="spacer"></section>
+  <div>
+    <vxe-button status="success" @click="resultEvent">获取数据</vxe-button>
+    <vxe-grid ref="gridRef" v-bind="gridOptions"></vxe-grid>
+  </div>
 </template>
+
+<script setup>
+import { ref, reactive } from 'vue'
+const gridRef = ref()
+const gridOptions = reactive({
+  border: true,
+  rowConfig: {
+    drag: true
+  },
+  columns: [
+    { field: 'name', title: 'Name' },
+    { field: 'role', title: 'Role', dragSort: true },
+    { field: 'sex', title: 'Sex' },
+    { field: 'age', title: 'Age' },
+    { field: 'address', title: 'Address' }
+  ],
+  data: [
+    { id: 10001, name: 'Test1', role: 'Develop', sex: 'Man', age: 28, address: 'test abc' },
+    { id: 10002, name: 'Test2', role: 'Test', sex: 'Women', age: 22, address: 'Guangzhou' },
+    { id: 10003, name: 'Test3', role: 'PM', sex: 'Man', age: 32, address: 'Shanghai' },
+    { id: 10004, name: 'Test4', role: 'Designer', sex: 'Women', age: 24, address: 'Shanghai' }
+  ]
+})
+const resultEvent = () => {
+  const $grid = gridRef.value
+  if ($grid) {
+    const tableData = $grid.getFullData()
+    console.log(tableData)
+  }
+}
+
+</script>
