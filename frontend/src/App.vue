@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import DynamicTable from './components/DynamicTable.vue'
 </script>
 
 <template>
-  <HelloWorld />
+  <DynamicTable />
 </template>
